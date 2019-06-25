@@ -2,15 +2,26 @@ import random
 #名詞の活用語尾
 suf=[["a","ae","am","ae","a","ae","arum","as","is","is"],["us","i","um","o","o","i","orum","os","is","is"]\
      ,["um","i","um","o","o","a","orum","a","is","is"]]
-#[変化の種類,意味,性別]
-dic={"statu{}":[0,"像",0],"domin{}":[1,"主人",1],"verb{}":[2,"言葉",2],\
-     "naut{}":[0,"水夫",1],"espitul{}":[0,"手紙",0],"serv{}":[1,"奴隷",1],"bell{}":[2,"戦争",2]}
 n=["単数","複数"]
 s=["主格","属格","対格","与格","奪格"]
+dic={}
+def makedic(read):
+    file=open(read,"r")
+    f=file.read()
+    file.close()
+    f1=f.split("\n")
+    while "" in f1:
+        f1.remove("")
+    for i in range(len(f1)):
+            f1[i]=f1[i].split(",")
+    for a in f1:
+        dic[a[0]]=[int(a[1]),a[2],int(a[3])]
+
+makedic("dicN.txt")
 print("次の名詞を、指示された格の形でラテン語で書け")
 while True:
     A1=random.randint(0,1)
-    A2=random.randint(0,4)
+    A2=random.randint(1,4)
     num=n[A1]
     stat=s[A2]
     QWard=random.choice(list(dic.keys()))
@@ -22,3 +33,9 @@ while True:
         print("正解")
     else:
         print("残念。正解は{}".format(QAns))
+        #file=open("wrong.txt","a")
+        #file.write("{0},{1},{2}\n".format(QW,A1,A2))
+        #file.close()
+        
+
+
